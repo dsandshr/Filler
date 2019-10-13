@@ -6,7 +6,7 @@
 /*   By: dsandshr <dsandshr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/15 12:17:44 by ksharlen          #+#    #+#             */
-/*   Updated: 2019/10/12 16:22:40 by dsandshr         ###   ########.fr       */
+/*   Updated: 2019/10/13 19:31:39 by dsandshr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ int				ft_isspace(int c);
 ssize_t			ft_pow(int n, int level);
 int				ft_revers(int n);
 void			ft_lstadd_end(t_list **begin_list, t_list *elem);
-int				get_next_line(const int fd, char **line, char signal);
+int				get_next_line(const int fd, char **line);
 void			ft_lstfreeone(void *content, size_t content_size);
 t_list			*ft_lstelem(t_list *begin_list,
 	size_t index, size_t lst_size);

@@ -6,7 +6,7 @@
 /*   By: dsandshr <dsandshr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 19:05:19 by dsandshr          #+#    #+#             */
-/*   Updated: 2019/10/12 19:06:29 by dsandshr         ###   ########.fr       */
+/*   Updated: 2019/10/13 19:35:22 by dsandshr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 int	main(void)
 {
-	ft_putstr("AGABLIN");
-	return (0);
+	t_game_info	*g_info;
+	while (1)
+	{
+		if (!(game_info_init(g_info)))
+			exit (1);
+	}
 }

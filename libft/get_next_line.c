@@ -5,126 +5,69 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsandshr <dsandshr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/11 16:31:21 by ksharlen          #+#    #+#             */
-/*   Updated: 2019/10/12 16:22:57 by dsandshr         ###   ########.fr       */
+/*   Created: 2019/04/20 13:59:54 by dsandshr          #+#    #+#             */
+/*   Updated: 2019/08/17 19:23:02 by dsandshr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static t_list		*ft_find_fd_to_lst(t_list *beg, int fd)
+static t_lst		*lst_new(int fd)
 {
-	if (beg)
-		while (beg)
-		{
-			if ((*(int *)beg->content) == fd)
-				return (beg);
-			beg = beg->next;
-		}
-	return (NULL);
+	t_lst			*new;
+
+	if (!(new = (t_lst *)malloc(sizeof(t_lst))))
+		return (NULL);
+	new->str_line = ft_strnew(0);
+	new->fd = fd;
+	new->next = NULL;
+	return (new);
 }
 
-static int			ft_line_fill(char **line, t_list *elem)
+static char			**lst_find_or_add(t_lst **begin, int fd)
 {
-	void			*tmp;
-	char			*back_n;
-	size_t			len;
+	t_lst			*lst;
 
-	back_n = ft_memchr(elem->content + 4, '\n', elem->content_size - 4);
-	(*line) = ft_strsub(elem->content + 4, 0,
-	ft_strnlen(elem->content + 4, '\n'));
-	if (!(*line))
-		return (-1);
-	len = ft_memnlen(elem->content + 4, '\n', elem->content_size - 4) + 1;
-	tmp = elem->content;
-	if (len == elem->content_size - 4)
+	lst = *begin;
+	if (!lst)
 	{
-		elem->content = ft_memsub(tmp, 0, 4);
-		elem->content_size = 4;
+		if (!(*begin = lst_new(fd)))
+			return (NULL);
+		return (&(*begin)->str_line);
 	}
-	else
-	{
-		elem->content_size = (elem->content_size - len);
-		elem->content = ft_memnjoin(tmp, back_n + 1, 4, elem->content_size - 4);
-	}
-	ft_memdel(&tmp);
-	return (elem->content ? 1 : -1);
+	while (lst->next && lst->fd != fd)
+		lst = lst->next;
+	if (fd == lst->fd)
+		return (&lst->str_line);
+	if (!(lst->next = lst_new(fd)))
+		return (NULL);
+	return (&lst->next->str_line);
 }
 
-static ssize_t		ft_read_write(t_list *elem)
+int					get_next_line(const int fd, char **line)
 {
-	ssize_t			t_byte_read;
+	static t_lst	*lst_fd = NULL;
 	char			*buf;
-	void			*tmp;
+	char			**str_line;
+	char			*tmp_free;
+	int				n;
 
-	tmp = NULL;
-	buf = ft_memalloc(BUFF_SIZE);
-	if (buf)
-	{
-		t_byte_read = read(*(int *)elem->content, buf, BUFF_SIZE);
-		if (!t_byte_read || t_byte_read == -1)
+	if (line && (str_line = lst_find_or_add(&lst_fd, fd)) &&
+			(buf = ft_strnew(BUFF_SIZE)))
+		while ((n = read(fd, buf, BUFF_SIZE)) >= 0)
 		{
-			ft_strdel(&buf);
-			return (t_byte_read ? -1 : 0);
-		}
-		tmp = elem->content;
-		elem->content = ft_memnjoin(tmp, buf, elem->content_size, t_byte_read);
-		elem->content_size += t_byte_read;
-		ft_memdel(&tmp);
-		ft_strdel(&buf);
-		return (elem->content ? t_byte_read : -1);
-	}
-	return (-1);
-}
-
-static int			ft_build_line(t_list *elem, char **line)
-{
-	char			*back_n;
-	ssize_t			t_byte_read;
-
-	t_byte_read = -2;
-	while (1)
-	{
-		if ((back_n = ft_memchr(elem->content + 4, '\n',
-		elem->content_size - 4)))
-			return (ft_line_fill(line, elem));
-		else if (!t_byte_read)
-		{
-			if (elem->content_size <= 4)
+			tmp_free = *str_line;
+			*str_line = ft_strjoin(*str_line, buf);
+			free(tmp_free);
+			ft_bzero(buf, n);
+			if (!ft_strchr(*str_line, '\n') && n == BUFF_SIZE)
+				continue;
+			free(buf);
+			*line = ft_strcut(*str_line, '\n');
+			if (n == 0 && !**str_line && !**line)
 				return (0);
-			(*line) = ft_strsub(elem->content + 4, 0, elem->content_size - 4);
-			ft_lstreplace(&elem, (int *)elem->content, 4);
-			return ((!(*line) || !elem->content) ? -1 : 1);
+			ft_str_chr_clr(*str_line, '\n');
+			return (1);
 		}
-		else
-		{
-			t_byte_read = ft_read_write(elem);
-			if (t_byte_read == -1)
-				return (-1);
-		}
-	}
-}
-
-int					get_next_line(const int fd, char **line, char signal)
-{
-	static t_list	*beg;
-	t_list			*tmp;
-
-	if (signal)
-	{
-		ft_lstdel(&beg, ft_lstfreeone);
-		return (0);
-	}
-	if (fd >= 0 && fd < FD_MAX && BUFF_SIZE > 0 && line)
-	{
-		if (!(tmp = ft_find_fd_to_lst(beg, fd)))
-		{
-			tmp = ft_lstnew(&fd, 4);
-			if (!tmp)
-				return (-1);
-			ft_lstadd_end(&beg, tmp);
-		}
-		return (ft_build_line(tmp, line));
-	}
 	return (-1);
 }

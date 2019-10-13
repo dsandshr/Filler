@@ -6,7 +6,7 @@
 /*   By: dsandshr <dsandshr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/27 18:12:12 by ksharlen          #+#    #+#             */
-/*   Updated: 2019/10/12 16:12:03 by dsandshr         ###   ########.fr       */
+/*   Updated: 2019/10/13 15:17:24 by dsandshr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static char			check_opt(const char argv, const char *stringopt)
 {
 	if (argv)
-		returfn (ft_strchr(stringopt, argv) ? argv : '?');
+		return (ft_strchr(stringopt, argv) ? argv : '?');
 	else
 		return (0);
 }
