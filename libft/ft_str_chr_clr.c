@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_str_chr_clr.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsandshr <dsandshr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/12 19:05:19 by dsandshr          #+#    #+#             */
-/*   Updated: 2019/10/16 19:43:35 by dsandshr         ###   ########.fr       */
+/*   Created: 2019/05/07 18:45:21 by dsandshr          #+#    #+#             */
+/*   Updated: 2019/08/17 14:50:28 by dsandshr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "filler.h"
+#include "libft.h"
 
-int	main(void)
+void		ft_str_chr_clr(char *s, char c)
 {
-	t_game_info	*g_info;
+	char	*p;
 
-	g_info = NULL;
-	g_info = game_info_init(g_info);
-
-
+	if ((p = ft_strchr(s, c)))
+		ft_strcpy(s, p + 1);
+	else
+		ft_strclr(s);
 }

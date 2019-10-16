@@ -6,7 +6,7 @@
 #    By: dsandshr <dsandshr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/12 18:21:34 by dsandshr          #+#    #+#              #
-#    Updated: 2019/10/13 16:21:15 by dsandshr         ###   ########.fr        #
+#    Updated: 2019/10/16 17:10:34 by dsandshr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,14 +18,15 @@ DIR_INCLUDE_LIBFT	:=	./libft/include
 DIR_BIN				:=	bin/
 DIRS_INCLUDE		:=	$(DIR_INCLUDE_FILLER) $(DIR_INCLUDE_LIBFT)
 
-SRCS				:=	main.c filler_game_info
+SRCS				:=	main.c\
+						filler_game_init.c
 
 OBJS				:=	$(SRCS:.c=.o)
 OBJ_WITH_DIR		:=	$(addprefix $(DIR_BIN), $(OBJS))
 HEADERS				:=	filler.h
 LIBFT				:=	libft.a
 
-CFLAGS				:=	-Wextra -Werror -Wall
+CFLAGS				:=	-Wextra -Werror -Wall -g
 CFLAG				:=	-c
 NFLAG				:=	-o
 IFLAG				:=	-I

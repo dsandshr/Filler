@@ -6,7 +6,7 @@
 /*   By: dsandshr <dsandshr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/15 12:17:44 by ksharlen          #+#    #+#             */
-/*   Updated: 2019/10/13 19:31:39 by dsandshr         ###   ########.fr       */
+/*   Updated: 2019/10/16 17:22:19 by dsandshr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,13 @@ typedef struct	s_list
 	size_t			content_size;
 	struct s_list	*next;
 }				t_list;
+
+typedef struct		s_lst
+{
+	int				fd;
+	char			*str_line;
+	struct s_lst	*next;
+}					t_lst;
 
 enum			e_rw
 {
@@ -173,6 +180,9 @@ void			ft_print_lines(char *const str[]);
 size_t			ft_lineslen(char *const lines[]);
 void			ft_strdel_split(char **del);
 char			*ft_stroneof(const char *str, const char *find);
+char			*ft_strcut(char *s, char c);
+void			ft_str_chr_clr(char *s, char c);
+char			*ft_strndup(const char *s1, size_t n);
 
 /*
 **FILE

@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strcut.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsandshr <dsandshr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/12 19:05:19 by dsandshr          #+#    #+#             */
-/*   Updated: 2019/10/16 19:43:35 by dsandshr         ###   ########.fr       */
+/*   Created: 2019/05/07 17:43:13 by dsandshr          #+#    #+#             */
+/*   Updated: 2019/08/17 14:50:09 by dsandshr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "filler.h"
+#include "libft.h"
 
-int	main(void)
+char		*ft_strcut(char *s, char c)
 {
-	t_game_info	*g_info;
+	char	*p;
+	char	*fresh;
 
-	g_info = NULL;
-	g_info = game_info_init(g_info);
-
-
+	if ((p = ft_strchr(s, c)))
+		fresh = ft_strndup(s, p - s);
+	else
+		fresh = ft_strdup(s);
+	return (fresh);
 }

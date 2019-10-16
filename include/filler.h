@@ -6,7 +6,7 @@
 /*   By: dsandshr <dsandshr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 18:18:49 by dsandshr          #+#    #+#             */
-/*   Updated: 2019/10/13 19:34:38 by dsandshr         ###   ########.fr       */
+/*   Updated: 2019/10/16 16:58:34 by dsandshr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ typedef struct			s_game_info
 	int					player_number;
 	int					*my_poz;
 	int					*enemy_poz;
+	int					map_poz_x;
+	int					map_poz_y;
 	struct s_game_info	*next;
 }						t_game_info;
 
@@ -32,7 +34,7 @@ typedef	struct			s_figure
 	char				figure;
 }						t_figure;
 
-t_game_info	game_info_init(t_game_info *game_info);
+t_game_info	*game_info_init(t_game_info *game_info);
 
 
 #endif

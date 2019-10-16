@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsandshr <dsandshr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/12 19:05:19 by dsandshr          #+#    #+#             */
-/*   Updated: 2019/10/16 19:43:35 by dsandshr         ###   ########.fr       */
+/*   Created: 2019/04/19 13:18:30 by dsandshr          #+#    #+#             */
+/*   Updated: 2019/08/17 14:51:59 by dsandshr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "filler.h"
+#include "libft.h"
 
-int	main(void)
+char		*ft_strndup(const char *s1, size_t n)
 {
-	t_game_info	*g_info;
+	char	*str;
+	char	*s2;
+	size_t	len;
 
-	g_info = NULL;
-	g_info = game_info_init(g_info);
-
-
+	len = ft_strlen(s1);
+	len = (len > n ? n : len);
+	str = (char*)malloc(sizeof(char) * (len + 1));
+	if ((s2 = str))
+	{
+		while (len--)
+			*s2++ = *s1++;
+		*s2 = '\0';
+	}
+	return (str);
 }
