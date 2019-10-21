@@ -6,35 +6,40 @@
 /*   By: dsandshr <dsandshr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 19:05:19 by dsandshr          #+#    #+#             */
-/*   Updated: 2019/10/19 17:02:50 by dsandshr         ###   ########.fr       */
+/*   Updated: 2019/10/20 16:31:24 by dsandshr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-int	main(void)
+static void			cleanup(t_bot_inf *bot)
 {
-	t_game_info	*g_info;
-	char *line;
-	int i;
-	int fd;
+	int				i;
 
-	fd = open("doc.log", O_RDWR);
-	i = 0;
-	g_info = NULL;
-	g_info = game_info_init(g_info, line, fd);
-	while (1)
-	{
-		while (get_next_line(fd, &line) == 1 && i != 1)
+	i = bot->height;
+	while (i--)
+		free(bot->board[i]);
+	free(bot->board);
+	free(bot->move);
+	free(bot);
+}
+
+int					main(void)
+{
+	t_bot_inf		*bot;
+	char			*line;
+	int				done;
+
+	bot = NULL;
+	done = 0;
+	while (!done)
+		if (get_next_line(0, &line) == 1)
 		{
-			if (ft_strstr(line, "$$$"))
-			{
-				++i;
-				break;
-			}
+			if (!bot)
+				bot = get_info(line);
 			ft_strdel(&line);
+			done = fuck_this_bitch(bot);
 		}
-		exit (1);
-	}
-	exit (1);
+	cleanup(bot);
+	return (0);
 }
