@@ -6,7 +6,7 @@
 #    By: dsandshr <dsandshr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/12 18:21:34 by dsandshr          #+#    #+#              #
-#    Updated: 2019/10/20 16:33:29 by dsandshr         ###   ########.fr        #
+#    Updated: 2019/10/22 17:12:03 by dsandshr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,8 +19,8 @@ DIR_BIN				:=	bin/
 DIRS_INCLUDE		:=	$(DIR_INCLUDE_FILLER) $(DIR_INCLUDE_LIBFT)
 
 SRCS				:=	main.c \
-						filler_init.c \
-						main_actions.c
+						filler_info.c \
+						fuck_actions.c
 
 OBJS				:=	$(SRCS:.c=.o)
 OBJ_WITH_DIR		:=	$(addprefix $(DIR_BIN), $(OBJS))
