@@ -6,17 +6,17 @@
 /*   By: dsandshr <dsandshr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 18:18:49 by dsandshr          #+#    #+#             */
-/*   Updated: 2019/10/22 20:33:28 by dsandshr         ###   ########.fr       */
+/*   Updated: 2019/10/23 17:23:28 by dsandshr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FILLER
-# define FILLER
+#ifndef FILLER_H
+# define FILLER_H
 
 # include "libft.h"
 
-# define BOT_O -55
-# define BOT_X -45
+# define O_PLAYER -33
+# define X_PLAYER -77
 
 typedef struct	s_play
 {
@@ -25,31 +25,31 @@ typedef struct	s_play
 	int		y;
 }				t_play;
 
-typedef struct	s_figure
+typedef struct	s_piece
 {
-	int			width;
-	int			height;
-	int			size;
-	int			x;
-	int			y;
-	int			chr;
-	t_figure	*next;
-}				t_figure;
+	int		*coords;
+	int		width;
+	int		height;
+	int		size;
+}				t_piece;
 
-typedef struct	s_bot_inf
+typedef struct	s_filler
 {
-	int		**map;
+	int		**board;
 	int		width;
 	int		height;
 	int		player;
-	int		enemy;
-	int		enemy_size;
-	int		enemy_block;
+	int		opponent;
+	int		opp_size;
+	int		opp_blocked;
 	t_play	*move;
-}				t_bot_inf;
+}				t_filler;
 
-t_bot_inf	*get_info(char *line);
 int			main(void);
-int			fuck_this_bitch(t_bot_inf *bot);
+t_filler	*init_bot(char *player_line);
+int			fuck_actions(t_filler *bot);
+void		heat_map(t_filler *bot);
+void		find_move(t_filler *bot, const t_piece *token);
+char		*read_input(void);
 
 #endif

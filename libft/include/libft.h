@@ -6,7 +6,7 @@
 /*   By: dsandshr <dsandshr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/15 12:17:44 by ksharlen          #+#    #+#             */
-/*   Updated: 2019/10/19 17:24:07 by dsandshr         ###   ########.fr       */
+/*   Updated: 2019/10/23 16:59:35 by dsandshr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 
 # define MAXLONG 			9223372036854775807
 # define FD_MAX				7198
-# define BUFF_SIZE			1
+# define BUFF_SIZE			100
 
 /*
 **OTHER

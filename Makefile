@@ -6,7 +6,7 @@
 #    By: dsandshr <dsandshr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/12 18:21:34 by dsandshr          #+#    #+#              #
-#    Updated: 2019/10/22 17:12:03 by dsandshr         ###   ########.fr        #
+#    Updated: 2019/10/23 17:25:21 by dsandshr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,8 +19,11 @@ DIR_BIN				:=	bin/
 DIRS_INCLUDE		:=	$(DIR_INCLUDE_FILLER) $(DIR_INCLUDE_LIBFT)
 
 SRCS				:=	main.c \
-						filler_info.c \
-						fuck_actions.c
+						game_info.c \
+						fuck_actions.c \
+						heat_map.c \
+						find_move.c \
+						read_input.c
 
 OBJS				:=	$(SRCS:.c=.o)
 OBJ_WITH_DIR		:=	$(addprefix $(DIR_BIN), $(OBJS))

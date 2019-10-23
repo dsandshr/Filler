@@ -1,104 +1,117 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fuck_actions.c                                     :+:      :+:    :+:   */
+/*   solver.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsandshr <dsandshr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/22 17:11:02 by dsandshr          #+#    #+#             */
-/*   Updated: 2019/10/22 21:34:38 by dsandshr         ###   ########.fr       */
+/*   Created: 2019/08/12 19:53:59 by smorty            #+#    #+#             */
+/*   Updated: 2019/10/23 17:23:03 by dsandshr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-static	void	*get_figure(t_figure *fg)
+static void		read_board(int **board, int rows)
 {
-	t_figure	*nextFg;
-	char		*line;
-	int			y;
-	int			x;
+	char	*line;
+	char	*p;
+	int		y;
 
-	nextFg = fg;
-	nextFg->y = 0;
 	y = 0;
-	while (nextFg->y < fg->height)
+	free((line = read_input()));
+	while (rows--)
 	{
-		get_next_line(0, &line);
-		nextFg->x = 0;
-		while (line[nextFg->x])
+		line = read_input();
+		p = line;
+		while (*p)
 		{
-			if (line[nextFg->x] == '*')
-				nextFg->chr = 1;
-			else if (line[nextFg->x] == '.')
-				nextFg->chr = 0;
-			nextFg->x++;
-			if (line[nextFg->x + 1])
-				
+			if (*p == 'o' || *p == 'O')
+				board[y][p - line - 4] = O_PLAYER;
+			else if (*p == 'x' || *p == 'X')
+				board[y][p - line - 4] = X_PLAYER;
+			++p;
 		}
-		ft_strdel(&line);
-		nextFg->y++;
+		++y;
+		free(line);
 	}
 }
 
-static t_figure *figure_reader(void)
+static int		*get_coords(t_piece *new)
 {
-	t_figure *fg;
-	char *line;
-	char *pointer;
+	char	*line;
+	char	*s;
+	int		*coords;
+	int		i;
 
-	if (!(fg = (t_figure *)malloc(sizeof(t_figure))))
-		exit (-1);
-	// while (get_next_line(0, &line) == 1)
-	// {
-	// 	if (ft_strstr("Piece", line))
-	// 		break;
-	// 	ft_strdel(&line);
-	// }
-	get_next_line(0, &line);
-	pointer = line;
-	while (*pointer != ' ')
-		pointer++;
-	fg->height = ft_atoi(++pointer);
-	while (*pointer != ' ')
-		pointer++;
-	fg->width = ft_atoi(++pointer);
-	ft_strdel(&line);
-	get_figure(fg);
-	return (fg);
+	if (!(coords = (int *)malloc(sizeof(int) * new->height * new->width)))
+		strerror(errno);
+	i = 0;
+	new->size = 0;
+	while (i < new->height)
+	{
+		line = read_input();
+		s = line;
+		while (*s)
+		{
+			if (*s == '*')
+				coords[new->size++] = (i << 16) | (s - line);
+			++s;
+		}
+		free(line);
+		++i;
+	}
+	return (coords);
 }
 
-static void	map_reader(int **map, int y)
+static t_piece	*get_piece(void)
 {
-	char *line;
-	char *pointer;
+	t_piece	*new;
+	char	*line;
+	char	*p;
+
+	if (!(new = (t_piece *)malloc(sizeof(t_piece))))
+		strerror(errno);
+	line = read_input();
+	p = line;
+	while (*p != ' ')
+		++p;
+	new->height = ft_atoi(++p);
+	while (*p != ' ')
+		++p;
+	new->width = ft_atoi(++p);
+	free(line);
+	new->coords = get_coords(new);
+	return (new);
+}
+
+static void		clean_last_move(t_filler *bot, t_piece *token)
+{
 	int i;
 
-	i = 0;
-	while (y--)
+	free(token->coords);
+	free(token);
+	bot->move->x = -1;
+	bot->move->y = -1;
+	if (!bot->opp_blocked)
 	{
-		get_next_line(0, &line);
-		pointer = line;
-		while (*pointer)
-		{
-			if (*pointer == 'o' || *pointer == 'O')
-				map[i][pointer - line - 4] = BOT_O;
-			else if (*pointer == 'x' || *pointer == 'X')
-				map[i][pointer - line - 4] = BOT_X;
-			pointer++;
-		}
-		i++;
-		ft_strdel(&line);
+		i = bot->height;
+		while (i--)
+			ft_bzero(bot->board[i], sizeof(int) * bot->width);
 	}
 }
 
-int fuck_this_bitch(t_bot_inf *bot)
+int				fuck_actions(t_filler *bot)
 {
-	 t_figure *fg;
+	t_piece	*token;
 
-	bot->move->val = 1;
-	map_reader(bot->map, bot->height);
-	fg = figure_reader(fg);
-	heat_maper()
-	return (0);
+	bot->move->val = 0xffff;
+	read_board(bot->board, bot->height);
+	token = get_piece();
+	if (!bot->opp_blocked)
+		heat_map(bot);
+	find_move(bot, token);
+	ft_printf("%d %d\n", bot->move->y, bot->move->x);
+	clean_last_move(bot, token);
+	return (bot->move->val == 0xffff ? 1 : 0);
 }
