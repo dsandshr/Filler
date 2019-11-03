@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 NAME				:=	./players/dsandshr.filler
-DIR_SRC				:=	src/
+DIR_SRC				:=	src/Filler
 DIR_INCLUDE_FILLER	:=	./include
 DIR_LIBFT			:=	./libft/
 DIR_INCLUDE_LIBFT	:=	./libft/include
@@ -30,7 +30,7 @@ OBJ_WITH_DIR		:=	$(addprefix $(DIR_BIN), $(OBJS))
 HEADERS				:=	filler.h
 LIBFT				:=	libft.a
 
-CFLAGS				:=	-Wextra -Werror -Wall -g
+CFLAGS				:=	-g -Wextra -Werror -Wall
 CFLAG				:=	-c
 NFLAG				:=	-o
 IFLAG				:=	-I

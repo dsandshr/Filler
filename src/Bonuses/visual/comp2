@@ -1,2 +1,0 @@
-gcc main.o /Users/dsandshr/main/Filler/libft/libft.a -Wl,-rpath, /Users/dsandshr/main/Filler/SDL2 -F /Users/dsandshr/main/Filler/SDL2 -framework SDL2 -o /Users/dsandshr/main/Filler/filler_visual;
-rm -rf main.o
