@@ -6,7 +6,7 @@
 #    By: dsandshr <dsandshr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/12 18:21:34 by dsandshr          #+#    #+#              #
-#    Updated: 2019/11/08 17:37:02 by dsandshr         ###   ########.fr        #
+#    Updated: 2019/11/10 13:53:47 by dsandshr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,6 @@ DIR_LIBFT			:=	./libft/
 DIR_INCLUDE_LIBFT	:=	./libft/include
 DIR_BIN				:=	bin/
 DIRS_INCLUDE		:=	$(DIR_INCLUDE_FILLER) $(DIR_INCLUDE_LIBFT)
-DIR_VISUAL			:=	./src/visual
 
 SRCS				:=	main.c \
 						game_info.c \
@@ -30,9 +29,8 @@ OBJS				:=	$(SRCS:.c=.o)
 OBJ_WITH_DIR		:=	$(addprefix $(DIR_BIN), $(OBJS))
 HEADERS				:=	filler.h
 LIBFT				:=	libft.a
-FILLER_VIS			:=	filler_vis
 
-CFLAGS				:=	-Wextra -Werror -Wall -g
+CFLAGS				:=	-g -Wextra -Werror -Wall
 CFLAG				:=	-c
 NFLAG				:=	-o
 IFLAG				:=	-I
@@ -59,8 +57,6 @@ $(DIR_BIN):
 		mkdir -p $@
 $(LIBFT):
 		$(MAKE_LIBFT)
-$(FILLER_VIS):
-		$(MAKE_FILLER_VIS)
 
 clean:
 		$(REMOVE) $(OBJ_WITH_DIR)
